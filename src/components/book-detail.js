@@ -10,7 +10,6 @@ import MailIcon from '@mui/icons-material/Mail';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import "../index.css";
 import Car1 from "./car";
-import { imgData } from "./data/data";
 import Header from "./header";
 import { useAuth } from "./context/auth";
 import axios from "axios";

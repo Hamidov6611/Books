@@ -21,7 +21,9 @@ a {
   background-color:#52a713;
   animation: zoom 2s linear infinite
 }
-
+.bgMessage {
+  background: #52a713;
+}
 @keyframes zoom {
   0% {
     transform:scale(1);

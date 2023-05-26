@@ -10,7 +10,8 @@ import "../index.css";
 import Header from "./header";
 import axios from "axios";
 import { useAuth } from "./context/auth";
-import { Pagination } from "@mui/material";
+import { CircularProgress, Pagination } from "@mui/material";
+import { toast } from "react-toastify";
 const Catalog = () => {
   const { slug } = useParams();
 
@@ -22,23 +23,25 @@ const Catalog = () => {
   const [catalog, setCatalog] = useState([]);
   const [auth, setAuth] = useAuth();
   const [data, setData] = useState([]);
-
+  const [soha, setSoha] = useState("");
+  const [pageApi, setPageApi] = useState(1);
   console.log(auth);
-
+  console.log(pageApi);
   const catalogHandler = async () => {
     try {
       const { data } = await axios.get(
-        `http://80.85.139.42:1000/book/${auth.catData}/?page=1`
+        `http://80.85.139.42:1000/book/${slug}/?page=${pageApi}`
       );
       setData(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     catalogHandler();
-  }, [auth.catData]);
-  console.log(data);
+  }, [pageApi, slug]);
+
   return (
     <div className=" flex flex-col relative">
       <Header />
@@ -163,7 +166,10 @@ const Catalog = () => {
                 <label className="text-[18px] font-roboto py-1">
                   Resurs sohasi
                 </label>
-                <select className="py-3 rounded-lg pl-2 border-2 border-lightGreey">
+                <select
+                  onChange={(e) => setSoha(e.target.value)}
+                  className="py-3 rounded-lg pl-2 border-2 border-lightGreey"
+                >
                   <option default className="p-4">
                     Davlat nomini kiriting
                   </option>
@@ -233,7 +239,7 @@ const Catalog = () => {
 
         <div className="w-[100%] head flex flex-col py-4">
           {data?.results?.map((item) => (
-            <section>
+            <section key={item?.id}>
               <div
                 className="w-[100%] lg:flex lg:flex-row flex-col 
               even:bg-slate-200 odd:bg-slate-50 p-2 rounded-md "
@@ -274,10 +280,16 @@ const Catalog = () => {
                   </p>
                 </div>
               </div>
+              <div className="w-[100%] mx-auto flex justify-center">
+                <Pagination
+                  count={10}
+                  onChange={(e, value) => setPageApi(value)}
+                  color="primary"
+                  className="relative my-9 bottom-0"
+                />
+              </div>
             </section>
           ))}
-
-          {/* <Pagination count={10} color="primary" /> */}
         </div>
       </div>
     </div>

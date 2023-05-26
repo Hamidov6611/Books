@@ -18,6 +18,7 @@ const Login = () => {
   const [username, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [auth, setAuth] = useAuth();
+  
 
   const navigate = useNavigate();
   const toogleHandler = () => setHide((prev) => !prev);
@@ -41,15 +42,18 @@ const Login = () => {
       );
       if (data.token) {
         Cookies.set("token", JSON.stringify("Bearer" + data?.token?.accsess));
-        setAuth({
+       setAuth({
           ...auth,
           user: data.message,
           token: data.token,
           isLogin: true,
         });
+        Cookies.set("auth", JSON.stringify(auth))
       }
+      Cookies.set("isLogin", auth.isLogin) 
       if (group.data.groups[0].name == "Student") {
         toast.success("Muvaffaqiyatli kirdingiz");
+        Cookies.set("auth", JSON.stringify([data, auth.isLogin]))
         navigate("/");
       } else {
         toast.error("User not found");
@@ -59,6 +63,7 @@ const Login = () => {
     }
   };
 
+console.log(auth)
   return (
     <div className=" flex flex-col relative">
       <Header />
@@ -129,11 +134,10 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              class="cssbuttons-io-button w-[40%] md:w-[30%] ml-[30%] md:ml-[35%]"
+              className="cssbuttons-io-button w-[40%] md:w-[30%] ml-[30%] md:ml-[35%]"
             >
-              {" "}
               Kirish
-              <div class="icon">
+              <div className="icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

@@ -31,25 +31,25 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
   ];
   const authMenuHandler = () => setAuthMenu((prev) => !prev);
   const navigate = useNavigate();
-  const logoutHandler = async () => {
-    try {
-      setAuth({
-        user: null,
-        token: "",
-        isLogin: false,
-      });
-      Cookies.remove("token");
-      navigate("/profile");
-    } catch (error) {
-      console.log(error);
-      toast.error(error);
-    }
+  const logoutHandler = () => {
+    setAuth({
+      ...auth,
+      user: null,
+      token: "",
+      isLogin: false,
+    });
+    Cookies.remove("token");
+    Cookies.remove("auth")
+    Cookies.remove("isLogin")
+    navigate("/profile");
   };
+
+  
 
   useEffect(() => {
     setAuth({
       ...auth,
-      catData: catId,
+      catData: catId
     });
   }, [catId]);
 
@@ -76,7 +76,6 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
                 to={"/profile"}
                 className="flex items-center h-[45px] w-[45px] rounded-3xl cursor-pointer"
               >
-               
                 <p className="ml-[5px] bg-limeGreen text-white p-2 rounded-3xl">
                   {auth.user.username}
                 </p>
@@ -84,18 +83,26 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
               <div></div>
             </div>
           )}
-          <div className="w-[90%] flex items-center justify-around lg:mr-[7%] lg:ml-[7%]">
-            <Link to={`/catalog/${catId}`} onClick={() => setCatId(1)}>
+          <div className="w-[90%] flex items-center justify-between lg:mr-[7%] lg:ml-[7%]">
+            <Link to={`/catalog/${1}`}>
               <div className="flex items-center">
                 <p className="cursor-pointer font-roboto text-[14px] text-lightGreey">
                   ADABIYOTLAR
                 </p>
               </div>
             </Link>
-            <Link to={`/catalog/${catId}`} onClick={() => setCatId(2)}>
+            <Link to={`/catalog/${2}`}>
               <div className="flex items-center">
                 <p className="cursor-pointer font-roboto text-[14px] text-lightGreey">
                   MAQOLALAR
+                </p>
+              </div>
+            </Link>
+            
+            <Link to={`/catalog/${3}`}>
+              <div className="flex items-center">
+                <p className="cursor-pointer font-roboto text-[14px] text-lightGreey">
+                  DISSERTATSIYALAR
                 </p>
               </div>
             </Link>
@@ -110,22 +117,17 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
                 width={"130px"}
               />
             </Link>
-            <Link to={`/catalog/${catId}`} onClick={() => setCatId(3)}>
-              <div className="flex items-center">
-                <p className="cursor-pointer font-roboto text-[14px] text-lightGreey">
-                  DISSERTATSIYALAR
-                </p>
-              </div>
-            </Link>
-
-            <Link
-              to={`/catalog/${catId}`}
-              onClick={() => setCatId(4)}
-              className="mr-3"
-            >
+            <Link to={`/catalog/${4}`}>
               <div className="flex items-center">
                 <p className="cursor-pointer font-roboto text-[14px] text-lightGreey">
                   MONOGRAFIYALAR
+                </p>
+              </div>
+            </Link>
+            <Link to={`/catalog/${5}`}>
+              <div className="flex items-center">
+                <p className="cursor-pointer font-roboto text-[14px] text-lightGreey">
+                  ILMIY ISHLAR
                 </p>
               </div>
             </Link>
@@ -136,7 +138,7 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
             </Link>
             {auth.isLogin ? (
               <Link to={"/auth/login"} className="cursor-pointer mr-[5%]">
-                <button className="sign" onClick={logoutHandler}>
+                <button className="sign" onClick={() => logoutHandler()}>
                   Chiqish
                   <div class="arrow-wrapper">
                     <div class="arrow"></div>
@@ -210,13 +212,15 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
           <div className="menu-bar w-[100%] mx-auto flex flex-col sm:flex-row sm:justify-between py-2 bg-limeGreen absolute top-16 z-20">
             <div className="sm:w-[50%] flex justify-around">
               <Link
-                to={`/catalog/${catId}`} onClick={() => setCatId(1)}
+                to={`/catalog/${catId}`}
+                onClick={() => setCatId(1)}
                 className="text-white font-roboto text-[20px]"
               >
                 Adabiyotlar
               </Link>
               <Link
-                to={`/catalog/${catId}`} onClick={() => setCatId(2)}
+                to={`/catalog/${catId}`}
+                onClick={() => setCatId(2)}
                 className="text-white font-roboto text-[20px]"
               >
                 Maqolalar
@@ -224,13 +228,15 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
             </div>
             <div className="sm:w-[50%] flex justify-around">
               <Link
-                to={`/catalog/${catId}`} onClick={() => setCatId(3)}
+                to={`/catalog/${catId}`}
+                onClick={() => setCatId(3)}
                 className="text-white font-roboto text-[20px]"
               >
                 Dissertatsiyalar
               </Link>
               <Link
-                to={`/catalog/${catId}`} onClick={() => setCatId(4)}
+                to={`/catalog/${catId}`}
+                onClick={() => setCatId(4)}
                 className="text-white font-roboto text-[20px]"
               >
                 Monografiyalar

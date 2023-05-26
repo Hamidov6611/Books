@@ -6,44 +6,65 @@ import ImportContactsOutlinedIcon from "@mui/icons-material/ImportContactsOutlin
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link, useNavigate } from "react-router-dom";
-import Carusel from "./carusel";
-import { imgData, imgData2 } from "./data/data";
-import FmdGoodIcon from "@mui/icons-material/FmdGood";
-import Car1 from "./car";
-import Category from "./carusel";
-import ProductCard from "./product-card";
-
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import SendIcon from "@mui/icons-material/Send";
 import Header from "./header";
-import Loader from "./utils/loader";
 import { useAuth } from "./context/auth";
 import axios from "axios";
+import { EmailOutlined } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
   const modalHandler = () => setModal(false);
-  const [auth, setAuth] = useAuth()
-  const [catData, setCatData] = useState([])
-  const navigate = useNavigate()
+  const [auth, setAuth] = useAuth();
+  const [catData, setCatData] = useState([]);
+  const [send1, setSend1] = useState(true);
+  const [send2, setSend2] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  let adabiyotlar;
 
   const countHandler = async () => {
     try {
-      const {data} = await axios.get("http://80.85.139.42:1000/book/count_cate/")
-      
-      setCatData(data)
+      const { data } = await axios.get(
+        "http://80.85.139.42:1000/book/count_cate/"
+      );
+      setCatData(data.count);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-useEffect(() => {
-  countHandler()
-},[])
-  return  (
+  };
+  useEffect(() => {
+    countHandler();
+  }, []);
+  console.log(catData);
+  const sendMessageHandler = () => {
+    setSend1(false);
+    setSend2(true);
+  };
+  const sendMessageHandler2 = () => {
+    setSend1(true);
+    setSend2(false);
+  };
+  const messageAlertHandler = () => {
+    if (auth.token) {
+      setSend1(true);
+      setSend2(false);
+      toast.success("Xabaringiz yetkazildi");
+    } else {
+      toast.error("Xabar yuborish uchun ro'yhatdan o'ting");
+      navigate('/auth/register')
+    } 
+  };
+  console.log(auth);
+  return (
     <div>
       <Header />
       <div className="wrap3 w-full h-[100vh]">
         <div className="md:w-[100%] lg:w-[90%]  flex flex-row  mx-auto justify-center md:items-center h-[80vh] main-menu p-3">
           <div className="flex flex-col md:w-[50%] md:mr-12  md:my-[36px] px-[40px] main-menu1">
             <img
-              src="//cdn.shopify.com/s/files/1/0070/8991/3908/files/logo_ca90e1e9-33da-4ed1-bcb0-19c471d50256.png?v=1613707406"
+              src="http://cdn.shopify.com/s/files/1/0070/8991/3908/files/logo_ca90e1e9-33da-4ed1-bcb0-19c471d50256.png?v=1613707406"
               alt="SmartBook - eBooks , Bookstore Shopify Theme"
               itemprop="logo"
               width={"200px"}
@@ -65,51 +86,114 @@ useEffect(() => {
               <SearchIcon className="relative top-[-32px] left-[10px] text-blue-800" />
             </div>
           </div>
+
           <div className="md:w-[50%] flex flex-col px-6 md:mb-0 ss:mb-32  ">
             <div className=" flex flex-row mb-3 xl:mb-6 justify-around ">
-              <Link className="bg-white w-[280px] py-[30px] px-[26px] rounded-md box1 mr-3 cursor-pointer" >
+              <Link
+                to={`/catalog/${1}`}
+                className="bg-white w-[280px] py-[30px] px-[26px] rounded-md box1 mr-3 cursor-pointer"
+              >
                 <AutoStoriesOutlinedIcon className="h-[20px] w-[20px]" />
-                <p className="text-[14px] sm:text-[20px] font-semibold py-2">
-                  {/* {`${catData?.count[0]?.count}`} */} 0
-                    Adabiyotlar
+                <p className="text-[14px] sm:text-[20px] font-semibold py-2 flex">
+                  <p>{catData[0]?.count} </p>
+                  <p className="ml-2">Adabiyotlar</p>
                 </p>
                 <p class="text-roboto text-[.75rem] text1">
                   Oliy ta'lim muassasalarining barcha o'quv adabiyotlari
                   ro'yxati
                 </p>
               </Link>
-              <div className="bg-white w-[280px] py-[30px] px-[26px] rounded-md box1 cursor-pointer" onClick={() => navigate('/catalog/2')}>
+              <Link
+                to={`/catalog/${2}`}
+                className="bg-white w-[280px] py-[30px] px-[26px] rounded-md box1 cursor-pointer"
+              >
                 <MenuBookOutlinedIcon />
-                <p className="text-[14px] sm:text-[20px] font-semibold py-2">
-                {/* {`${catData?.count[1]?.count}`} */}4
-                  Maqolalar
+                <p className="text-[14px] sm:text-[20px] font-semibold py-2 flex">
+                  <p>{catData[1]?.count} </p>
+                  <p className="ml-2">Maqolalar</p>
                 </p>
                 <p className="text-roboto text-[.75rem] text1">
                   O'qituvchilar va ilmiy tadqiqotchilarning barcha maqolalari
                   ro'yxati
                 </p>
-              </div>
+              </Link>
             </div>
-            <div className="flex flex-row justify-around " >
-              <div className="bg-white w-[280px] py-[30px] px-[26px] rounded-md box1 mr-3 cursor-pointer" onClick={() => navigate('/catalog/3')}>
+            <div className="md:w-[50%] flex flex-col px-6 md:mb-6 ml-[25%] ss:mb-32">
+              <Link
+                to={`/catalog/${5}`}
+                className="bg-white w-[280px] py-[30px] px-[26px] rounded-md box1 mr-3 cursor-pointer"
+              >
+                <ReceiptIcon className="h-[20px] w-[20px]" />
+                <p className="text-[14px] sm:text-[20px] font-semibold py-2 flex">
+                  {/* <p>{catData[0]?.count} </p> */}
+                  <p>0</p>
+                  <p className="ml-2">Ilmiy ishlar</p>
+                </p>
+                <p class="text-roboto text-[.75rem] text1">
+                  Oliy ta'lim muassasalarining barcha ilmiy ishlar ro'yxati
+                </p>
+              </Link>
+            </div>
+            <div className="flex flex-row justify-around ">
+              <Link
+                to={`/catalog/${3}`}
+                className="bg-white w-[280px] py-[30px] px-[26px] rounded-md box1 mr-3 cursor-pointer"
+              >
                 <ArticleOutlinedIcon />
-                <p className="text-[14px] sm:text-[20px] font-semibold py-2">
-                  8252 monografiyalar
+                <p className="text-[14px] sm:text-[20px] font-semibold py-2 flex">
+                  <p>{catData[3]?.count} </p>
+                  <p className="ml-2">Monografiyalar</p>
                 </p>
                 <p className="text-roboto text-[.75rem] text1">
                   Oliy ta'lim muassasalarining barcha monografiyalari ro'yxati
                 </p>
-              </div>
-              <div className="bg-white w-[280px] py-[30px] px-[26px] rounded-md box1 cursor-pointer" onClick={() => navigate('/catalog/4')}>
+              </Link>
+              <Link
+                to={`/catalog/${4}`}
+                className="bg-white w-[280px] py-[30px] px-[26px] rounded-md box1 cursor-pointer"
+              >
                 <ImportContactsOutlinedIcon />
-                <p className="text-[14px] sm:text-[20px] font-semibold py-2">
-                  20896 dissertatsiyalar
+                <p className="text-[14px] sm:text-[20px] font-semibold py-2 flex">
+                  <p>{catData[2]?.count} </p>
+                  <p className="ml-2">Dissertatsiyalar</p>
                 </p>
                 <p className="text-roboto text-[.75rem] text1">
                   Oliy ta'lim muassasalarining barcha dissertatsiyalari ro'yxati
                 </p>
-              </div>
+              </Link>
             </div>
+            {send1 && (
+              <div
+                onClick={sendMessageHandler}
+                className="py-3 bgMessage fixed bottom-0 right-12 w-[300px] rounded-tl-md rounded-tr-3xl flex flex-row cursor-pointer"
+              >
+                <EmailOutlined className="text-white ml-2" />
+                <p className="text-white ml-3">Bizga xabar yuboring</p>
+                <SendIcon className="ml-6 text-white" />
+              </div>
+            )}
+            {send2 && (
+              <div className="py-3  fixed bottom-0 right-12 w-[300px]  flex flex-col cursor-pointer">
+                <div
+                  onClick={sendMessageHandler2}
+                  className=" flex py-3 bgMessage rounded-bt-md rounded-tl-md rounded-tr-3xl"
+                >
+                  <EmailOutlined className="text-white ml-2" />
+                  <p className="text-white ml-3">Bizga xabar yuboring</p>
+                </div>
+                <div className="w-[300px]">
+                  <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="w-full min-h-[100px] bg-slate-200 outline-none border-0 p-2 font-medium text-lightGreey resize-none"
+                  />
+                  <SendIcon
+                    onClick={messageAlertHandler}
+                    className="text-limeGreen absolute bottom-7 right-3"
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

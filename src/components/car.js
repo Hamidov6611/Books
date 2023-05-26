@@ -1,7 +1,6 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { imgData, imgData2 } from "./data/data";
 import CardBook from "./card";
 import ProductCard from "./product-card";
 import {Link, useNavigate} from 'react-router-dom'
