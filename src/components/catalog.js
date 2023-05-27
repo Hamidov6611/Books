@@ -85,10 +85,10 @@ const Catalog = () => {
   const fullSearchHandler = async (e) => {
     e.preventDefault();
    try {
-    const data3 = await axios.get(
+    const {data} = await axios.get(
       `http://80.85.139.42:1000/book/filter/?name_book=${catalogName}&author_book=${catalogBook}&city_name_of_book=${catalogCat}&resource_language_book=${catalogLanguage}&resource_type_book=${catalogType}&resource_field_book=${soha}&publisher_name=${catName}&publisher_year=${catYear}`
     );
-    console.log(data3);
+    setData(data)
    } catch (error) {
     console.log(error)
    }
