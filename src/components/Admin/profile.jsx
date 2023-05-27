@@ -28,38 +28,9 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="flex my-4 justify-between items-center">
-          <p className="text-lightGreey font-roboto text-[24px]">
-            Mening nashrlarim
-          </p>
-          <button
-            onClick={() => setModal(true)}
-            className="flex bg-limeGreen text-white items-center p-4 rounded-lg"
-          >
-            <AddCircleOutlineIcon />
-            <p className="text-[16px] ml-2">Nashr qo'shish</p>
-          </button>
-          {modal && <MyModal setModal={setModal} />}
-        </div>
         
-        <div className="w-[100%] flex justify-center flex-wrap bg-slate-200 p-4 rounded-lg items-center">
-          <Link className="w-[50%] md:w-[25%] my-2 md:my-0 flex justify-center focus:bg-sky-600 focus:py-2 focus:rounded-lg focus:text-white ">
-            <p className="mr-3">O'quv adabiyotlar</p>
-            <p className="bg-white rounded-md px-2 text-black">0</p>
-          </Link>
-          <Link className="w-[50%] md:w-[25%] my-2 md:my-0 flex justify-center focus:bg-sky-600 focus:py-2 focus:rounded-lg focus:text-white">
-            <p className="mr-3">Maqolalar</p>
-            <p className="bg-white rounded-md px-2 text-black">0</p>
-          </Link>
-          <Link className="w-[50%] md:w-[25%] my-2 md:my-0 flex justify-center focus:bg-sky-600 focus:py-2 focus:rounded-lg focus:text-white">
-            <p className="mr-3">Dissertatsiyalar</p>
-            <p className="bg-white rounded-md px-2 text-black">0</p>
-          </Link>
-          <Link className="w-[50%] md:w-[25%] my-2 md:my-0 flex justify-center focus:bg-sky-600 focus:py-2 focus:rounded-lg focus:text-white">
-            <p className="mr-3">Monografiyalar</p>
-            <p className="bg-white rounded-md px-2 text-black">0</p>
-          </Link>
-        </div>
+        
+        
       </div>
     </div>
   );

@@ -47,15 +47,32 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
     setSend2(false);
     if (name && message) {
       toast.success("Xabaringiz yetkazildi");
-    } if(!name) {
+    }
+    if (!name) {
       toast.error("Ism, familiya maydoni bo'sh");
-    } else if(!message){
-      toast.error("Xabar maydoni bo'sh")
+    } else if (!message) {
+      toast.error("Xabar maydoni bo'sh");
     }
   };
   const toggleHandler = () => {
     setSend1(true);
     setSend2(false);
+  };
+  console.log(name, message);
+  const messageHandler = async (e) => {
+    e.preventDefault()
+    try {
+      const message1 = { full_name: name, post: message };
+      const data = await axios.post(
+        "http://80.85.139.42:1000/book/create_post/",
+        message1
+      );
+      console.log(data);
+      setSend1(true);
+      setSend2(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -174,7 +191,10 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
               </div>
             )}
             {send2 && (
-              <div className="py-3  fixed bottom-0 right-12 w-[300px]  flex flex-col cursor-pointer">
+              <form
+                onSubmit={messageHandler}
+                className="py-3  fixed bottom-0 right-12 w-[300px]  flex flex-col cursor-pointer"
+              >
                 <div
                   onClick={toggleHandler}
                   className=" flex py-3 bgMessage rounded-bt-md rounded-tl-md rounded-tr-3xl"
@@ -183,31 +203,34 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
                   <p className="text-white ml-3">Bizga xabar yuboring</p>
                 </div>
                 <div className="w-[300px]">
-                  <div className="bg-slate-200 min-h-[100px] flex flex-col">
+                  <div
+                    onSubmit={messageHandler}
+                    className="bg-slate-200 min-h-[100px] flex flex-col"
+                  >
                     <input
                       value={name}
                       onChange={(e) => setFirstName(e.target.value)}
                       placeholder="Ism, familiyangizni kiriting"
                       className="w-[90%] mx-auto my-2 p-1 border-0 outline-0 focus:border-2 focus:border-limeGreen rounded-lg"
                     />
-                    
+
                     <textarea
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       className="min-h-[100px] w-[90%] mx-auto my-2 rounded-lg  bg-white outline-none border-0 p-2 font-medium  resize-none"
                     />
                     <button
-                      onClick={sendMessageHandler2}
+                      type="submit"
+                      
                       className="bg-limeGreen w-[40%] py-1 mb-2 rounded-lg text-white mx-auto flex justify-center items-center"
                     >
                       <p className="mr-1">Yuborish</p>
-                      <button>
-                        <SendIcon />
-                      </button>
+
+                      <SendIcon />
                     </button>
                   </div>
                 </div>
-              </div>
+              </form>
             )}
           </div>
         </div>

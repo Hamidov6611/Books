@@ -12,6 +12,7 @@ import axios from "axios";
 import { useAuth } from "./context/auth";
 import { CircularProgress, Pagination } from "@mui/material";
 import { toast } from "react-toastify";
+import Loader from "./utils/loader";
 const Catalog = () => {
   const { slug } = useParams();
 
@@ -32,9 +33,11 @@ const Catalog = () => {
   const [catalogCat, setCatalogCat] = useState("");
   const [catalogBook, setCatalogCatBook] = useState("");
   const [catName, setCatName] = useState("");
-  const [catYear, setCatYear] = useState("");
+  const [catYear, setCatYear] = useState(0);
+  const [loader, setLoader] = useState(true)
 
   const catalogHandler = async () => {
+
     try {
       const { data } = await axios.get(
         `http://80.85.139.42:1000/book/${slug}/?page=${pageApi}`
@@ -63,40 +66,44 @@ const Catalog = () => {
           `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle}`
         );
         console.log(data1.data);
-        // setData(data1.data)
+        setData(data1.data)
       }
       if (bookTitle && authorName) {
         const data2 = await axios.get(
           `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle}&author_book=${authorName}`
         );
-        // setData(data2)
+        setData(data2)
         console.log(data2.data);
       }
     } catch (error) {
+      
       console.log(error);
     }
   };
-
+  console.log(catalogLanguage)
   //fullSearchHandler
   const fullSearchHandler = async (e) => {
     e.preventDefault();
-
+   try {
     const data3 = await axios.get(
       `http://80.85.139.42:1000/book/filter/?name_book=${catalogName}&author_book=${catalogBook}&city_name_of_book=${catalogCat}&resource_language_book=${catalogLanguage}&resource_type_book=${catalogType}&resource_field_book=${soha}&publisher_name=${catName}&publisher_year=${catYear}`
     );
-
     console.log(data3);
+   } catch (error) {
+    console.log(error)
+   }
   };
   useEffect(() => {
     catalogHandler();
     getOptionDataHandler();
   }, [pageApi, slug]);
+  optionData?.CityName?.map((item) => console.log(item))
   return (
-    <div className=" flex flex-col relative">
+    <div className="flex flex-col relative">
       <Header />
       <div className="w-[90%] md:w-[80%] mx-auto pb-[40px] ">
         <Link to={"/"} className="flex flex-row py-4 items-center">
-          <WestIcon className="mr-3" />
+          <WestIcon className="mr-3"/>
           <p className="text-darkGreey text-[24px] font-semibold">
             Bosh sahifaga
           </p>
@@ -196,7 +203,7 @@ const Catalog = () => {
                     Davlat nomini kiriting
                   </option>
                   {optionData?.CityName?.map((item) => (
-                    <option key={item?.fields?.name} value={item?.fields?.name}>
+                    <option key={item?.fields?.name} value={item?.pk}>
                       {item?.fields?.name}
                     </option>
                   ))}
@@ -215,7 +222,7 @@ const Catalog = () => {
                     Resurs tilini kiriting
                   </option>
                   {optionData?.ResourceLanguage?.map((item) => (
-                    <option key={item?.fields?.name} value={item?.fields?.name}>
+                    <option key={item?.fields?.name} value={item?.pk}>
                       {item?.fields?.name}
                     </option>
                   ))}
@@ -234,7 +241,7 @@ const Catalog = () => {
                     Resurs turini kiriting
                   </option>
                   {optionData?.ResourceType?.map((item) => (
-                    <option key={item?.fields?.name} value={item?.fields?.name}>
+                    <option key={item?.fields?.name} value={item?.pk}>
                       {item?.fields?.name}
                     </option>
                   ))}
@@ -253,7 +260,7 @@ const Catalog = () => {
                     Resurs sohasini kiriting
                   </option>
                   {optionData?.ResourceField?.map((item) => (
-                    <option key={item?.fields?.name} value={item?.fields?.name}>
+                    <option key={item?.fields?.name} value={item?.pk}>
                       {item?.fields?.name}
                     </option>
                   ))}
@@ -279,7 +286,7 @@ const Catalog = () => {
                 <input
                   value={catYear}
                   onChange={(e) => setCatYear(e.target.value)}
-                  type="text"
+                  type="number"
                   className="py-3 rounded-lg pl-2 border-2 border-lightGreey"
                   placeholder="Nashriyot yilini kiriting"
                 />
