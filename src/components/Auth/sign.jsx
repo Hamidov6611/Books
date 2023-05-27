@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Footer from "../footer";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useNavigate } from "react-router-dom";
 import WestIcon from "@mui/icons-material/West";
 import ErrorIcon from "@mui/icons-material/Error";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -9,6 +9,7 @@ import "../../index.css";
 import Sponsr from "../data/sponsr";
 import Header from "../header";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Sign = () => {
   const [hide, setHide] = useState(false);
@@ -20,6 +21,7 @@ const Sign = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate()
 
   // RegisterHandler
 
@@ -33,7 +35,9 @@ const Sign = () => {
         password
       };
       const data = await axios.post("http://80.85.139.42:1000/auth/user_register/", userData);
-      console.log(data)
+      navigate('/')
+      toast.success("Muvaffaqiyatli ro'yhatdan o'tdingiz")
+
     } catch (error) {
       console.log(error);
     }

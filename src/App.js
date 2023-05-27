@@ -17,6 +17,7 @@ function App() {
   const [modal, setModal] = useState(false);
   const [like, setLike] = useState(false);
   const [authMenu, setAuthMenu] = useState(false);
+  
 
   return (
     <div className="flex flex-col">
@@ -49,6 +50,7 @@ function App() {
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
       <ToastContainer />
+            
     </div>
   );
 }

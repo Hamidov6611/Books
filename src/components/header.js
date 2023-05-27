@@ -23,12 +23,7 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
   const [profile, setProfile] = useState(false);
   const menuHandler = () => setMenu((prev) => !prev);
   const [catId, setCatId] = useState(1);
-  const [catData, setCatData] = [
-    { id: 1, name: "Adabiyotlar" },
-    { id: 2, name: "Maqolalar" },
-    { id: 3, name: "Dissertatsiyalar" },
-    { id: 4, name: "Monografiyalar" },
-  ];
+  const [userData, setUserData] = useState([]);
   const authMenuHandler = () => setAuthMenu((prev) => !prev);
   const navigate = useNavigate();
   const logoutHandler = () => {
@@ -39,28 +34,33 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
       isLogin: false,
     });
     Cookies.remove("token");
-    Cookies.remove("auth")
-    Cookies.remove("isLogin")
+    Cookies.remove("auth");
+    Cookies.remove("isLogin");
     navigate("/profile");
   };
-
-  
 
   useEffect(() => {
     setAuth({
       ...auth,
-      catData: catId
+      catData: catId,
     });
   }, [catId]);
+  useEffect(() => {
+    const a = Cookies.get("auth")
+    if(a) {
+      setUserData(JSON.parse(a))
+    }
+  },[])
+  // console.log(userData.message.username)
 
   return (
     <div className="">
       <div className="md:w-[100%] lg:w-[86%]  h-[70px] mx-auto wrap1 z-100 ">
         <div className="h-[70px] w-full items-center flex ">
-          {!auth.isLogin ? (
+          {!userData.token ? (
             <div className=" w-[10%] flex mx-8 lg:mx-0 items-center">
               <button className="text-limeGreen underline text-[14px] flex text-center">
-                <div class="zoom-animation-div  ">
+                <div className="zoom-animation-div  ">
                   <Link
                     to={"/auth/register"}
                     className="text-white no-underline"
@@ -77,7 +77,7 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
                 className="flex items-center h-[45px] w-[45px] rounded-3xl cursor-pointer"
               >
                 <p className="ml-[5px] bg-limeGreen text-white p-2 rounded-3xl">
-                  {auth.user.username}
+                  {userData.message.username}
                 </p>
               </Link>
               <div></div>
@@ -98,7 +98,7 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
                 </p>
               </div>
             </Link>
-            
+
             <Link to={`/catalog/${3}`}>
               <div className="flex items-center">
                 <p className="cursor-pointer font-roboto text-[14px] text-lightGreey">
@@ -113,7 +113,7 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
               <img
                 src="//cdn.shopify.com/s/files/1/0070/8991/3908/files/logo_ca90e1e9-33da-4ed1-bcb0-19c471d50256.png?v=1613707406"
                 alt="SmartBook - eBooks , Bookstore Shopify Theme"
-                itemprop="logo"
+                itemProp="logo"
                 width={"130px"}
               />
             </Link>
@@ -132,11 +132,9 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
               </div>
             </Link>
           </div>
-          <div className="w-[10%] md:w-[20%] flex items-center md:pr-[20px]">
-            <Link className=" font-roboto bg-limeGreen p-1 mr-8 w-[40px] rounded-lg text-[white] text-center cursor-pointer">
-              Uz
-            </Link>
-            {auth.isLogin ? (
+          <div className="w-[10%] md:w-[10%] flex items-center md:pr-[20px]">
+            
+            {userData.token ? (
               <Link to={"/auth/login"} className="cursor-pointer mr-[5%]">
                 <button className="sign" onClick={() => logoutHandler()}>
                   Chiqish
@@ -209,37 +207,37 @@ const Header = ({ modal, setModal, authMenu, setAuthMenu }) => {
           </div>
         </div>
         {menu && (
-          <div className="menu-bar w-[100%] mx-auto flex flex-col sm:flex-row sm:justify-between py-2 bg-limeGreen absolute top-16 z-20">
-            <div className="sm:w-[50%] flex justify-around">
+          <div className="menu-bar w-[100%] h-full mx-auto flex py-2 bg-limeGreen absolute top-16 z-20">
+            <div className="flex flex-col w-[100%] h-[60vh] items-center justify-between mt-12 uppercase text-[28px]">
               <Link
-                to={`/catalog/${catId}`}
-                onClick={() => setCatId(1)}
-                className="text-white font-roboto text-[20px]"
+                to={`/catalog/${1}`}
+                className="text-white font-medium"
               >
                 Adabiyotlar
               </Link>
               <Link
-                to={`/catalog/${catId}`}
-                onClick={() => setCatId(2)}
-                className="text-white font-roboto text-[20px]"
+                to={`/catalog/${2}`}
+                className="text-white font-medium"
               >
                 Maqolalar
               </Link>
-            </div>
-            <div className="sm:w-[50%] flex justify-around">
               <Link
-                to={`/catalog/${catId}`}
-                onClick={() => setCatId(3)}
-                className="text-white font-roboto text-[20px]"
+                to={`/catalog/${3}`}
+                className="text-white font-medium"
               >
                 Dissertatsiyalar
               </Link>
               <Link
-                to={`/catalog/${catId}`}
-                onClick={() => setCatId(4)}
-                className="text-white font-roboto text-[20px]"
+                to={`/catalog/${4}`}
+                className="text-white font-medium"
               >
                 Monografiyalar
+              </Link>
+              <Link
+                to={`/catalog/${5}`}
+                className="text-white font-medium"
+              >
+                Ilmiy ishlar
               </Link>
             </div>
           </div>

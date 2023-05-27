@@ -11,7 +11,7 @@ const Footer = () => {
           <img
             src="//cdn.shopify.com/s/files/1/0070/8991/3908/files/logo_ca90e1e9-33da-4ed1-bcb0-19c471d50256.png?v=1613707406"
             alt="SmartBook - eBooks , Bookstore Shopify Theme"
-            itemprop="logo"
+            itemProp="logo"
             width={"130px"}
             className="mb-4"
           />

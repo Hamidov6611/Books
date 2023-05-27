@@ -31,6 +31,7 @@ const Login = () => {
         "http://80.85.139.42:1000/auth/user_login/",
         loginData
       );
+      
       let config = {
         headers: {
           Authorization: "Bearer " + data.token.accsess,
@@ -40,6 +41,8 @@ const Login = () => {
         "http://80.85.139.42:1000/auth/user_profile/",
         config
       );
+      console.log(data)
+      console.log(group)
       if (data.token) {
         Cookies.set("token", JSON.stringify("Bearer" + data?.token?.accsess));
        setAuth({
@@ -49,11 +52,12 @@ const Login = () => {
           isLogin: true,
         });
         Cookies.set("auth", JSON.stringify(auth))
+       
       }
-      Cookies.set("isLogin", auth.isLogin) 
+      
       if (group.data.groups[0].name == "Student") {
         toast.success("Muvaffaqiyatli kirdingiz");
-        Cookies.set("auth", JSON.stringify([data, auth.isLogin]))
+        Cookies.set("auth", JSON.stringify(data));
         navigate("/");
       } else {
         toast.error("User not found");
@@ -63,7 +67,6 @@ const Login = () => {
     }
   };
 
-console.log(auth)
   return (
     <div className=" flex flex-col relative">
       <Header />

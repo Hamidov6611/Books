@@ -66,8 +66,8 @@ console.log(isDownload, auth)
                 <img
                   width={"360px"}
                   height={"260px"}
-                  className=""
-                  src={`http://80.85.139.42:1000/${bookData.image}`}
+                  className="max-h-[260px] max-w-[360px] rounded-lg"
+                  src={bookData?.image ? `http://80.85.139.42:1000/${bookData.image}` : 'https://sciendo.com/product-not-found.png'}
                 />
                 <p className="my-3 text-[#74808C] bg-[#EEF1F3] rounded-2xl py-1 text-center">
                   Resurs statusi: <span className="text-black">To'liq ochiq</span>
@@ -174,7 +174,7 @@ console.log(isDownload, auth)
                 </p>
                 
               </div>
-
+              
               <p className="font-roboto text-[16px] my-4 min-h-[160px]">
                 {bookData.description}
               </p>
