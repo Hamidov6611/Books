@@ -72,11 +72,11 @@ const Catalog = () => {
         const data2 = await axios.get(
           `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle}&author_book=${authorName}`
         );
-        setData(data2)
+        setData(data2.data)
         console.log(data2.data);
       }
     } catch (error) {
-      
+
       console.log(error);
     }
   };
@@ -97,7 +97,6 @@ const Catalog = () => {
     catalogHandler();
     getOptionDataHandler();
   }, [pageApi, slug]);
-  optionData?.CityName?.map((item) => console.log(item))
   return (
     <div className="flex flex-col relative">
       <Header />
