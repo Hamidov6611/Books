@@ -76,14 +76,7 @@ const Sign = () => {
                   <p className="text-red-600 mr-2">*</p>
                   <p>Ismi</p>
                 </div>
-                <div className="flex [w-50%] ">
-                  <p className="py-1 bg-red-600  rounded-lg text-white flex items-center text-[14px] px-2">
-                    <p>
-                      <ErrorIcon className="mr-1" />
-                    </p>
-                    <p>Majburiy</p>
-                  </p>
-                </div>
+                
               </label>
               <input
                 value={firstName}
@@ -99,14 +92,7 @@ const Sign = () => {
                   <p className="text-red-600 mr-2">*</p>
                   <p>Familyasi</p>
                 </div>
-                <div className="flex [w-50%] ">
-                  <p className="py-1 bg-red-600  rounded-lg text-white flex items-center text-[14px] px-2">
-                    <p>
-                      <ErrorIcon className="mr-1" />
-                    </p>
-                    <p>Majburiy</p>
-                  </p>
-                </div>
+                
               </label>
               <input
                 value={lastName}
@@ -126,14 +112,7 @@ const Sign = () => {
                   <p className="text-red-600 mr-2">*</p>
                   <p>Login</p>
                 </div>
-                <div className="flex [w-50%] ">
-                  <p className="py-1 bg-red-600  rounded-lg text-white flex items-center text-[14px] px-2">
-                    <p>
-                      <ErrorIcon className="mr-1" />
-                    </p>
-                    <p>Majburiy</p>
-                  </p>
-                </div>
+                
               </label>
               <input
                 value={username}
@@ -152,14 +131,7 @@ const Sign = () => {
                   <p className="text-red-600 mr-2">*</p>
                   <p>Parol</p>
                 </div>
-                <div className="flex [w-50%] ">
-                  <p className="py-1 bg-red-600  rounded-lg text-white flex items-center text-[14px] px-2">
-                    <p>
-                      <ErrorIcon className="mr-1" />
-                    </p>
-                    <p>Majburiy</p>
-                  </p>
-                </div>
+                
               </label>
               <input
                 value={password}
@@ -185,14 +157,7 @@ const Sign = () => {
                   <p className="text-red-600 mr-2">*</p>
                   <p>Parol tasdig'i</p>
                 </div>
-                <div className="flex [w-50%] ">
-                  <p className="py-1 bg-red-600  rounded-lg text-white flex items-center text-[14px] px-2">
-                    <p>
-                      <ErrorIcon className="mr-1" />
-                    </p>
-                    <p>Majburiy</p>
-                  </p>
-                </div>
+                
               </label>
               <input
                 value={confirmPassword}
