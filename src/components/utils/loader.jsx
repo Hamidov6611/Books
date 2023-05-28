@@ -1,12 +1,13 @@
-import React from 'react'
-import './utils.css'
+import React from "react";
+import "./utils.css";
+import { CircularProgress } from "@mui/material";
 
-const Loader = () => {
+const Loader1 = () => {
   return (
-    <div className='load-wrap'>
-        <div class="loader"></div>
+    <div id="preloader">
+      <CircularProgress />
     </div>
-  )
-}
+  );
+};
 
-export default Loader
+export default Loader1;

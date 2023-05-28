@@ -178,30 +178,30 @@ console.log(isDownload, auth)
               <p className="font-roboto text-[16px] my-4 min-h-[160px]">
                 {bookData.description}
               </p>
-              <div className="w-[100%] flex flex-row justify-between">
-                <Link className="flex text-blue-700 bg-sky-300 min-w-[50px] py-1 px-5 rounded-lg">
-                  <TelegramIcon />
-                  <p className="text-white ml-[10px]">Telegram</p>
+              <div className="w-[100%] mb-6 flex flex-row justify-between">
+                <Link className="flex justify-center text-blue-700 bg-sky-300 min-w-[50px] py-1 px-5 rounded-lg">
+                  <TelegramIcon/>
+                  <p className="text-white ml-[10px] text1 text-center">Telegram</p>
                 </Link>
 
-                <Link className="flex text-blue-700 bg-sky-300 min-w-[50px] py-1 px-5 rounded-lg">
+                <Link className="flex justify-center text-blue-700 bg-sky-300 min-w-[50px] py-1 px-5 rounded-lg">
                   <FacebookIcon />
-                  <p className="text-white ml-[10px]">Facebook</p>
+                  <p className="text-white text1 ml-[10px]">Facebook</p>
                 </Link>
 
-                <Link className="flex text-blue-700 bg-sky-300 min-w-[50px] py-1 px-5 rounded-lg">
+                <Link className="flex justify-center text-blue-700 bg-sky-300 min-w-[50px] py-1 px-5 rounded-lg">
                   <LinkedInIcon />
-                  <p className="text-white ml-[10px]">Linkedin</p>
+                  <p className="text-white ml-[10px] text1">Linkedin</p>
                 </Link>
 
-                <Link className="flex text-red-700 bg-pink-300 min-w-[50px] py-1 px-5 rounded-lg">
+                <Link className="flex justify-center text-red-700 bg-pink-300 min-w-[50px] py-1 px-5 rounded-lg">
                   <EmailOutlined />
-                  <p className="text-white ml-[10px]">Email</p>
+                  <p className="text-white ml-[10px] text1">Email</p>
                 </Link>
 
-                <Link className="flex text-blue-700 bg-sky-300 min-w-[50px] py-1 px-5 rounded-lg">
+                <Link className="flex justify-center text-blue-700 bg-sky-300 min-w-[50px] py-1 px-5 rounded-lg">
                   <TwitterIcon />
-                  <p className="text-white ml-[10px]">Twitter</p>
+                  <p className="text-white ml-[10px] text1">Twitter</p>
                 </Link>
                 
               </div>

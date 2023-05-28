@@ -5,6 +5,7 @@ import WestIcon from "@mui/icons-material/West";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
 import { ClearOutlined, Email } from "@mui/icons-material";
+import FolderOffIcon from "@mui/icons-material/FolderOff";
 
 import "../index.css";
 import Header from "./header";
@@ -13,8 +14,10 @@ import { useAuth } from "./context/auth";
 import { CircularProgress, Pagination } from "@mui/material";
 import { toast } from "react-toastify";
 import Loader from "./utils/loader";
+import Cookies from "js-cookie";
 const Catalog = () => {
   const { slug } = useParams();
+  console.log(slug);
 
   const [bookTitle, setBookTitle] = useState("");
   const [authorName, SetAuthorName] = useState("");
@@ -34,10 +37,9 @@ const Catalog = () => {
   const [catalogBook, setCatalogCatBook] = useState("");
   const [catName, setCatName] = useState("");
   const [catYear, setCatYear] = useState(0);
-  const [loader, setLoader] = useState(true)
+  const [not, setNot] = useState(true);
 
   const catalogHandler = async () => {
-
     try {
       const { data } = await axios.get(
         `http://80.85.139.42:1000/book/${slug}/?page=${pageApi}`
@@ -47,6 +49,7 @@ const Catalog = () => {
       console.log(error);
     }
   };
+
   const getOptionDataHandler = async () => {
     try {
       const { data } = await axios.get(
@@ -63,46 +66,63 @@ const Catalog = () => {
     try {
       if (bookTitle && !authorName) {
         const data1 = await axios.get(
-          `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle}`
+          `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle}
+          `
         );
         console.log(data1.data);
-        setData(data1.data)
+        setData(data1.data);
       }
       if (bookTitle && authorName) {
         const data2 = await axios.get(
           `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle}&author_book=${authorName}`
         );
-        setData(data2.data)
+        setData(data2.data);
         console.log(data2.data);
       }
     } catch (error) {
-
       console.log(error);
     }
   };
-  console.log(catalogLanguage)
+  console.log(catalogLanguage);
   //fullSearchHandler
   const fullSearchHandler = async (e) => {
     e.preventDefault();
-   try {
-    const {data} = await axios.get(
-      `http://80.85.139.42:1000/book/filter/?name_book=${catalogName}&author_book=${catalogBook}&city_name_of_book=${catalogCat}&resource_language_book=${catalogLanguage}&resource_type_book=${catalogType}&resource_field_book=${soha}&publisher_name=${catName}&publisher_year=${catYear}`
-    );
-    setData(data)
-   } catch (error) {
-    console.log(error)
-   }
+    try {
+      const { data } = await axios.get(
+        `http://80.85.139.42:1000/book/filter/?name_book=${catalogName}&author_book=${catalogBook}&city_name_of_book=${catalogCat}&resource_language_book=${catalogLanguage}&resource_type_book=${catalogType}&resource_field_book=${soha}&publisher_name=${catName}&publisher_year=${catYear}`
+      );
+      setData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const loaderHandler = () => {
+    setInterval(() => {
+      setNot(false);
+    }, 2000);
   };
   useEffect(() => {
     catalogHandler();
     getOptionDataHandler();
+    loaderHandler();
+    
   }, [pageApi, slug]);
+  const search = () => {
+    const search = Cookies.get("search");
+    if (search) {
+      const searchData = JSON.parse(search)
+      setData(searchData.data)
+    }
+  };
+  useEffect(() => {
+    search()
+  },[])
   return (
     <div className="flex flex-col relative">
       <Header />
       <div className="w-[90%] md:w-[80%] mx-auto pb-[40px] ">
         <Link to={"/"} className="flex flex-row py-4 items-center">
-          <WestIcon className="mr-3"/>
+          <WestIcon className="mr-3" />
           <p className="text-darkGreey text-[24px] font-semibold">
             Bosh sahifaga
           </p>
@@ -306,7 +326,7 @@ const Catalog = () => {
                   onClick={() => setFilter(true)}
                 >
                   <div className="flex justify-center">
-                    <ClearOutlined />
+                    {!not && <ClearOutlined />}
                     <p className="font-roboto">Filtrni yopish</p>
                   </div>
                 </button>
@@ -331,8 +351,8 @@ const Catalog = () => {
           </div>
         </div>
 
-        <div className="w-[100%] head flex flex-col py-4">
-          {data.length > 0 &&
+        <div className="w-[100%] min-h-[60vh] head flex flex-col py-4">
+          {data.length > 0 ? (
             data?.map((item) => (
               <section key={item?.id}>
                 <div
@@ -376,14 +396,35 @@ const Catalog = () => {
                   </div>
                 </div>
               </section>
-            ))}
+            ))
+          ) : (
+            <div
+              className={`w-[100%] h-full flex  justify-center items-center`}
+            >
+              {not && <CircularProgress className="mt-24" />}
+            </div>
+          )}
+          {!not && data.length <= 0 && (
+            <div className="flex justify-center flex-col w-[100%] bg-sky-100 p-8 md:p-24 rounded-lg items-center mt-6">
+              <FolderOffIcon
+                fontSize={"large"}
+                className="text-limeGreen h-[203px]"
+              />
+              <p className="text-[24px] mt-4 md:mt-8">Hech narsa topilmadi</p>
+              <p className="font-medium text-[18px] mt-4">
+                Kiritilgan qidiruv soʻzi boʻyicha hech qanday natija topilmadi
+              </p>
+            </div>
+          )}
           <div className="w-[100%] mx-auto flex justify-center">
-            <Pagination
-              count={data?.results?.length}
-              onChange={(e, value) => setPageApi(value)}
-              color="primary"
-              className="relative my-9 bottom-0"
-            />
+            {data.length > 0 && (
+              <Pagination
+                count={data?.length}
+                onChange={(e, value) => setPageApi(value)}
+                color="primary"
+                className="relative my-9 bottom-0"
+              />
+            )}
           </div>
         </div>
       </div>

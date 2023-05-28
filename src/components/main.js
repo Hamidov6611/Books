@@ -11,8 +11,11 @@ import SendIcon from "@mui/icons-material/Send";
 import Header from "./header";
 import { useAuth } from "./context/auth";
 import axios from "axios";
-import { EmailOutlined } from "@mui/icons-material";
+import { Cookie, EmailOutlined } from "@mui/icons-material";
 import { toast } from "react-toastify";
+import Loader from "react-loaders";
+import { CircularProgress } from "@mui/material";
+import Cookies from "js-cookie";
 
 const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
   const modalHandler = () => setModal(false);
@@ -23,6 +26,20 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
   const [name, setFirstName] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const [bookName, setBookName] = useState("");
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.get(
+        `http://80.85.139.42:1000/book/filter/?name_book=${bookName}`
+      );
+      navigate(`/catalog/${bookName}`)
+      Cookies.set("search", JSON.stringify({data, name:bookName}))
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const countHandler = async () => {
     try {
@@ -60,16 +77,22 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
   };
   console.log(name, message);
   const messageHandler = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const message1 = { full_name: name, post: message };
-      const data = await axios.post(
-        "http://80.85.139.42:1000/book/create_post/",
-        message1
-      );
-      console.log(data);
+      if (name && message) {
+        const data = await axios.post(
+          "http://80.85.139.42:1000/book/create_post/",
+          message1
+        );
+        toast.success("Xabaringiz yetkazildi");
+        setSend2(false);
+      } else if (!name) {
+        toast.error("Ism, familiya maydoni bo'sh");
+      } else if (!message) {
+        toast.error("Xabar maydoni bo'sh");
+      }
       setSend1(true);
-      setSend2(false);
     } catch (error) {
       console.log(error);
     }
@@ -78,6 +101,7 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
   return (
     <div>
       <Header />
+
       <div className="wrap3 w-full h-[100vh]">
         <div className="md:w-[100%] lg:w-[90%]  flex flex-row  mx-auto justify-center md:items-center h-[80vh] main-menu p-3">
           <div className="flex flex-col md:w-[50%] md:mr-12  md:my-[36px] px-[40px] main-menu1">
@@ -91,18 +115,20 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
               O'zbekiston Respublikasi oliy ta'lim va ilmiy tadqiqot
               muassasalarining yagona elektron kutubxona axborot tizimi
             </p>
-            <div className="py-3">
-              <button className="py-3 px-2 bg-limeGreen text-white lg:w-[100px] w-[100%] rounded-lg">
+            <div className="py-3 mt-4">
+              <Link to={`/catalog/${2}`} className="py-3 px-2 bg-limeGreen text-white lg:w-[100px] w-[100%] rounded-lg">
                 Batafsil
-              </button>
+              </Link>
             </div>
-            <div className="h-[40px] w-full mt-12">
+            <form onSubmit={submitHandler} className="h-[40px] w-full mt-12">
               <input
+                value={bookName}
+                onChange={(e) => setBookName(e.target.value)}
                 className="h-full border-2 w-full rounded-lg px-10 focus:border-blue-800 outline-0"
                 placeholder="Search for books"
               />
               <SearchIcon className="relative top-[-32px] left-[10px] text-blue-800" />
-            </div>
+            </form>
           </div>
 
           <div className="md:w-[50%] flex flex-col px-6 md:mb-0 ss:mb-32  ">
@@ -180,59 +206,58 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
                 </p>
               </Link>
             </div>
-            {send1 && (
+          </div>
+          {send1 && (
+            <div
+              onClick={sendMessageHandler}
+              className="py-3 bgMessage absolute bottom-0 right-12 w-[300px] rounded-tl-md rounded-tr-3xl flex flex-row cursor-pointer"
+            >
+              <EmailOutlined className="text-white ml-2" />
+              <p className="text-white ml-3">Bizga xabar yuboring</p>
+              <SendIcon className="ml-6 text-white" />
+            </div>
+          )}
+          {send2 && (
+            <form
+              onSubmit={messageHandler}
+              className="py-3  fixed bottom-0 right-12 w-[300px]  flex flex-col cursor-pointer"
+            >
               <div
-                onClick={sendMessageHandler}
-                className="py-3 bgMessage fixed bottom-0 right-12 w-[300px] rounded-tl-md rounded-tr-3xl flex flex-row cursor-pointer"
+                onClick={toggleHandler}
+                className=" flex py-3 bgMessage rounded-bt-md rounded-tl-md rounded-tr-3xl"
               >
                 <EmailOutlined className="text-white ml-2" />
                 <p className="text-white ml-3">Bizga xabar yuboring</p>
-                <SendIcon className="ml-6 text-white" />
               </div>
-            )}
-            {send2 && (
-              <form
-                onSubmit={messageHandler}
-                className="py-3  fixed bottom-0 right-12 w-[300px]  flex flex-col cursor-pointer"
-              >
+              <div className="w-[300px]">
                 <div
-                  onClick={toggleHandler}
-                  className=" flex py-3 bgMessage rounded-bt-md rounded-tl-md rounded-tr-3xl"
+                  onSubmit={messageHandler}
+                  className="bg-slate-200 min-h-[100px] flex flex-col"
                 >
-                  <EmailOutlined className="text-white ml-2" />
-                  <p className="text-white ml-3">Bizga xabar yuboring</p>
-                </div>
-                <div className="w-[300px]">
-                  <div
-                    onSubmit={messageHandler}
-                    className="bg-slate-200 min-h-[100px] flex flex-col"
+                  <input
+                    value={name}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="Ism, familiyangizni kiriting"
+                    className="w-[90%] mx-auto my-2 p-1 border-0 outline-0 focus:border-2 focus:border-limeGreen rounded-lg"
+                  />
+
+                  <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="min-h-[100px] w-[90%] mx-auto my-2 rounded-lg  bg-white outline-none border-0 p-2 font-medium  resize-none"
+                  />
+                  <button
+                    type="submit"
+                    className="bg-limeGreen w-[40%] py-1 mb-2 rounded-lg text-white mx-auto flex justify-center items-center"
                   >
-                    <input
-                      value={name}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      placeholder="Ism, familiyangizni kiriting"
-                      className="w-[90%] mx-auto my-2 p-1 border-0 outline-0 focus:border-2 focus:border-limeGreen rounded-lg"
-                    />
+                    <p className="mr-1">Yuborish</p>
 
-                    <textarea
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      className="min-h-[100px] w-[90%] mx-auto my-2 rounded-lg  bg-white outline-none border-0 p-2 font-medium  resize-none"
-                    />
-                    <button
-                      type="submit"
-                      
-                      className="bg-limeGreen w-[40%] py-1 mb-2 rounded-lg text-white mx-auto flex justify-center items-center"
-                    >
-                      <p className="mr-1">Yuborish</p>
-
-                      <SendIcon />
-                    </button>
-                  </div>
+                    <SendIcon />
+                  </button>
                 </div>
-              </form>
-            )}
-          </div>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </div>

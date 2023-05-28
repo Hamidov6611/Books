@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import Main from "./components/main";
 import Header from "./components/header";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Catalog from "./components/catalog";
 
 import BookDetail from "./components/book-detail";
@@ -12,15 +12,17 @@ import AdminPage from "./components/Admin/AdminPage";
 import Profile from "./components/Admin/profile";
 import EditProfile from "./components/Admin/editProfile";
 import EditPassword from "./components/Admin/editPassword";
+import Loader1 from "./components/utils/loader";
+import { CircularProgress } from "@mui/material";
 
 function App() {
   const [modal, setModal] = useState(false);
   const [like, setLike] = useState(false);
   const [authMenu, setAuthMenu] = useState(false);
-  
 
   return (
     <div className="flex flex-col">
+      
       {/* <Header modal={modal} setModal={setModal} authMenu={authMenu} setAuthMenu={setAuthMenu}/> */}
       <Routes>
         <Route
@@ -50,7 +52,6 @@ function App() {
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
       <ToastContainer />
-            
     </div>
   );
 }
