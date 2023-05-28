@@ -9,13 +9,12 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import MailIcon from '@mui/icons-material/Mail';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import "../index.css";
-import Car1 from "./car";
 import Header from "./header";
 import { useAuth } from "./context/auth";
 import axios from "axios";
 import { EmailOutlined } from "@mui/icons-material";
 import Loader from "./utils/loader";
-const BookDetail = ({ like, setLike }) => {
+const BookDetail = () => {
   const { category, id } = useParams();
   const [auth, setAuth] = useAuth();
   const [bookData, setBookData] = useState([]);
