@@ -36,9 +36,11 @@ const Sign = () => {
       };
       if(firstName && lastName && username, password) {
         const data = await axios.post("http://80.85.139.42:1000/auth/user_register/", userData);
-      navigate('/')
+      console.log(data)
       toast.success("Muvaffaqiyatli ro'yhatdan o'tdingiz")
       navigate('/auth/login')
+      } else {
+        toast.error("Barcha maydonlarni to'ldirish majburiy")
       }
 
     } catch (error) {
