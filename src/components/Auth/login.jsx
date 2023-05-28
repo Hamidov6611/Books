@@ -27,40 +27,44 @@ const Login = () => {
     e.preventDefault();
     try {
       const loginData = { username, password };
-      const { data } = await axios.post(
-        "http://80.85.139.42:1000/auth/user_login/",
-        loginData
-      );
-      
-      let config = {
-        headers: {
-          Authorization: "Bearer " + data.token.accsess,
-        },
-      };
-      const group = await axios.get(
-        "http://80.85.139.42:1000/auth/user_profile/",
-        config
-      );
-      console.log(data)
-      console.log(group)
-      if (data.token) {
-        Cookies.set("token", JSON.stringify("Bearer" + data?.token?.accsess));
-       setAuth({
-          ...auth,
-          user: data.message,
-          token: data.token,
-          isLogin: true,
-        });
-        Cookies.set("auth", JSON.stringify(auth))
-       
-      }
-      
-      if (group.data.groups[0].name == "Student") {
-        toast.success("Muvaffaqiyatli kirdingiz");
-        Cookies.set("auth", JSON.stringify(data));
-        navigate("/");
-      } else {
-        toast.error("User not found");
+      if(username && password) {
+        const { data } = await axios.post(
+          "http://80.85.139.42:1000/auth/user_login/",
+          loginData
+        );
+        
+        let config = {
+          headers: {
+            Authorization: "Bearer " + data.token.accsess,
+          },
+        };
+        const group = await axios.get(
+          "http://80.85.139.42:1000/auth/user_profile/",
+          config
+        );
+        console.log(data)
+        console.log(group)
+        if (data.token) {
+          Cookies.set("token", JSON.stringify("Bearer" + data?.token?.accsess));
+         setAuth({
+            ...auth,
+            user: data.message,
+            token: data.token,
+            isLogin: true,
+          });
+          Cookies.set("auth", JSON.stringify(auth))
+         
+        }
+        
+        if (group.data.groups[0].name == "Student") {
+          toast.success("Muvaffaqiyatli kirdingiz");
+          Cookies.set("auth", JSON.stringify(data));
+          navigate("/");
+        } else {
+          toast.error("User not found");
+        }
+      }else {
+        toast.error("Barcha maydonlarni to'ldirish majburiy")
       }
     } catch (error) {
       console.log(error);
