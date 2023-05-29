@@ -35,7 +35,7 @@ const Sign = () => {
         password
       };
       if(firstName && lastName && username, password) {
-        const data = await axios.post("http://80.85.139.42:1000/auth/user_register/", userData);
+        const data = await axios.post("http://45.12.72.210:80/auth/user_register/", userData);
       console.log(data)
       toast.success("Muvaffaqiyatli ro'yhatdan o'tdingiz")
       navigate('/auth/login')

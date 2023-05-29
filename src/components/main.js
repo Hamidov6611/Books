@@ -32,7 +32,7 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
     e.preventDefault();
     try {
       const { data } = await axios.get(
-        `http://80.85.139.42:1000/book/filter/?name_book=${bookName.charAt(0).toUpperCase() + bookName.slice(1)}`
+        `http://45.12.72.210:80/book/filter/?name_book=${bookName.charAt(0).toUpperCase() + bookName.slice(1)}`
       );
       navigate(`/catalog/${bookName}`)
       Cookies.set("search", JSON.stringify({data, name:bookName}))
@@ -44,7 +44,7 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
   const countHandler = async () => {
     try {
       const { data } = await axios.get(
-        "http://80.85.139.42:1000/book/count_cate/"
+        "http://45.12.72.210:80/book/count_cate/"
       );
       setCatData(data.count);
     } catch (error) {
@@ -80,7 +80,7 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
       const message1 = { full_name: name, post: message };
       if (name && message) {
         const data = await axios.post(
-          "http://80.85.139.42:1000/book/create_post/",
+          "http://45.12.72.210:80/book/create_post/",
           message1
         );
         toast.success("Xabaringiz yetkazildi");

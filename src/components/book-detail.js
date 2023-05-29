@@ -23,7 +23,7 @@ const BookDetail = () => {
   const detailHandler = async (e) => {
     try {
       const { data } = await axios.get(
-        `http://80.85.139.42:1000/book/detail/${id}/`
+        `http://45.12.72.210:80/book/detail/${id}/`
       );
       console.log(data)
       setBookData(data)
@@ -66,7 +66,7 @@ console.log(isDownload, auth)
                   width={"360px"}
                   height={"260px"}
                   className="max-h-[260px] max-w-[360px] rounded-lg"
-                  src={bookData?.image ? `http://80.85.139.42:1000/${bookData.image}` : 'https://sciendo.com/product-not-found.png'}
+                  src={bookData?.image ? `http://45.12.72.210:80/${bookData.image}` : 'https://sciendo.com/product-not-found.png'}
                 />
                 <p className="my-3 text-[#74808C] bg-[#EEF1F3] rounded-2xl py-1 text-center">
                   Resurs statusi: <span className="text-black">To'liq ochiq</span>
@@ -74,7 +74,7 @@ console.log(isDownload, auth)
                 <button className="flex my-3 bg-[#262A37] py-3 rounded-2xl justify-center" onClick={() => downloadHandler()}>
                   <DownloadIcon className="text-white ml-[10px]" />
                   <a
-                    href={isDownload && `http://80.85.139.42:1000${bookData.file}`}
+                    href={isDownload && `http://45.12.72.210:80${bookData.file}`}
                     download="Example-PDF-document"
                     target="_blank"
                     rel="noreferrer"

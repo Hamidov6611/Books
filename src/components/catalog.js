@@ -41,7 +41,7 @@ const Catalog = () => {
   const catalogHandler = async () => {
     try {
       const { data } = await axios.get(
-        `http://80.85.139.42:1000/book/${slug}/?page=${pageApi}`
+        `http://45.12.72.210:80/book/${slug}/?page=${pageApi}`
       );
       setData(data.results);
     } catch (error) {
@@ -52,7 +52,7 @@ const Catalog = () => {
   const getOptionDataHandler = async () => {
     try {
       const { data } = await axios.get(
-        "http://80.85.139.42:1000/book/create_book"
+        "http://45.12.72.210:80/book/create_book"
       );
       setOptionData(data);
     } catch (error) {
@@ -65,14 +65,14 @@ const Catalog = () => {
     try {
       if (bookTitle && !authorName) {
         const data1 = await axios.get(
-          `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle.charAt(0).toUpperCase() + bookTitle.slice(1)}
+          `http://45.12.72.210:80/book/filter/?name_book=${bookTitle.charAt(0).toUpperCase() + bookTitle.slice(1)}
           `
         );
         setData(data1.data);
       }
       if (bookTitle && authorName) {
         const data2 = await axios.get(
-          `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle.charAt(0).toUpperCase() + bookTitle.slice(1)}&author_book=${authorName.charAt(0).toUpperCase() + authorName.slice(1)}`
+          `http://45.12.72.210:80/book/filter/?name_book=${bookTitle.charAt(0).toUpperCase() + bookTitle.slice(1)}&author_book=${authorName.charAt(0).toUpperCase() + authorName.slice(1)}`
         );
         setData(data2.data);
       }
@@ -85,7 +85,7 @@ const Catalog = () => {
     e.preventDefault();
     try {
       const { data } = await axios.get(
-        `http://80.85.139.42:1000/book/filter/?name_book=${catalogName.charAt(0).toUpperCase() + catalogName.slice(1)}&author_book=${catalogBook.charAt(0).toUpperCase() + catalogBook.slice(1)}&city_name_of_book=${catalogCat}&resource_language_book=${catalogLanguage}&resource_type_book=${catalogType}&resource_field_book=${soha}&publisher_name=${catName}&publisher_year=${catYear}`
+        `http://45.12.72.210:80/book/filter/?name_book=${catalogName.charAt(0).toUpperCase() + catalogName.slice(1)}&author_book=${catalogBook.charAt(0).toUpperCase() + catalogBook.slice(1)}&city_name_of_book=${catalogCat}&resource_language_book=${catalogLanguage}&resource_type_book=${catalogType}&resource_field_book=${soha}&publisher_name=${catName}&publisher_year=${catYear}`
       );
       setData(data);
     } catch (error) {

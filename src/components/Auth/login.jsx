@@ -29,7 +29,7 @@ const Login = () => {
       const loginData = { username, password };
       if(username && password) {
         const { data } = await axios.post(
-          "http://80.85.139.42:1000/auth/user_login/",
+          "http://45.12.72.210:80/auth/user_login/",
           loginData
         );
         
@@ -39,7 +39,7 @@ const Login = () => {
           },
         };
         const group = await axios.get(
-          "http://80.85.139.42:1000/auth/user_profile/",
+          "http://45.12.72.210:80/auth/user_profile/",
           config
         );
         console.log(data)
