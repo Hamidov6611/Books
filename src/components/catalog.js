@@ -45,6 +45,7 @@ const Catalog = () => {
         `http://80.85.139.42:1000/book/${slug}/?page=${pageApi}`
       );
       setData(data.results);
+      console.log(data)
     } catch (error) {
       console.log(error);
     }
@@ -139,7 +140,7 @@ const Catalog = () => {
                 </label>
                 <input
                   type="text"
-                  className="py-3 rounded-lg pl-2 border-2 border-lightGreey capitalize"
+                  className="py-3 rounded-lg pl-2 border-2 border-lightGreey"
                   placeholder="Adabiyot nomini kiriting"
                   value={bookTitle}
                   onChange={(e) => setBookTitle(e.target.value)}
