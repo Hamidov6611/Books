@@ -54,7 +54,6 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
   useEffect(() => {
     countHandler();
   }, []);
-  console.log(catData);
   const sendMessageHandler = () => {
     setSend1(false);
     setSend2(true);
@@ -75,7 +74,6 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
     setSend1(true);
     setSend2(false);
   };
-  console.log(name, message);
   const messageHandler = async (e) => {
     e.preventDefault();
     try {

@@ -17,7 +17,6 @@ import Loader from "./utils/loader";
 import Cookies from "js-cookie";
 const Catalog = () => {
   const { slug } = useParams();
-  console.log(slug);
 
   const [bookTitle, setBookTitle] = useState("");
   const [authorName, SetAuthorName] = useState("");
@@ -115,7 +114,6 @@ const Catalog = () => {
   useEffect(() => {
     search()
   },[])
-  console.log(bookTitle.charAt(0).toUpperCase() + bookTitle.slice(1))
   return (
     <div className="flex flex-col relative">
       <Header />
