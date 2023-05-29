@@ -75,7 +75,7 @@ const Catalog = () => {
       }
       if (bookTitle && authorName) {
         const data2 = await axios.get(
-          `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle}&author_book=${authorName}`
+          `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle.charAt(0).toUpperCase() + bookTitle.slice(1)}&author_book=${authorName.charAt(0).toUpperCase() + authorName.slice(1)}`
         );
         setData(data2.data);
         console.log(data2.data);
