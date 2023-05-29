@@ -45,7 +45,6 @@ const Catalog = () => {
         `http://80.85.139.42:1000/book/${slug}/?page=${pageApi}`
       );
       setData(data.results);
-      console.log(data)
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +69,6 @@ const Catalog = () => {
           `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle.charAt(0).toUpperCase() + bookTitle.slice(1)}
           `
         );
-        console.log(data1.data);
         setData(data1.data);
       }
       if (bookTitle && authorName) {
@@ -84,7 +82,6 @@ const Catalog = () => {
       console.log(error);
     }
   };
-  console.log(catalogLanguage);
   //fullSearchHandler
   const fullSearchHandler = async (e) => {
     e.preventDefault();
