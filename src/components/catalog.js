@@ -118,6 +118,7 @@ const Catalog = () => {
   useEffect(() => {
     search()
   },[])
+  console.log(bookTitle.charAt(0).toUpperCase())
   return (
     <div className="flex flex-col relative">
       <Header />
