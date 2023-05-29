@@ -85,7 +85,7 @@ const Catalog = () => {
     e.preventDefault();
     try {
       const { data } = await axios.get(
-        `http://80.85.139.42:1000/book/filter/?name_book=${catalogName}&author_book=${catalogBook}&city_name_of_book=${catalogCat}&resource_language_book=${catalogLanguage}&resource_type_book=${catalogType}&resource_field_book=${soha}&publisher_name=${catName}&publisher_year=${catYear}`
+        `http://80.85.139.42:1000/book/filter/?name_book=${catalogName.charAt(0).toUpperCase() + catalogName.slice(1)}&author_book=${catalogBook.charAt(0).toUpperCase() + catalogBook.slice(1}&city_name_of_book=${catalogCat}&resource_language_book=${catalogLanguage}&resource_type_book=${catalogType}&resource_field_book=${soha}&publisher_name=${catName}&publisher_year=${catYear}`
       );
       setData(data);
     } catch (error) {
