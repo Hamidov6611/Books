@@ -75,7 +75,6 @@ const Catalog = () => {
           `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle.charAt(0).toUpperCase() + bookTitle.slice(1)}&author_book=${authorName.charAt(0).toUpperCase() + authorName.slice(1)}`
         );
         setData(data2.data);
-        console.log(data2.data);
       }
     } catch (error) {
       console.log(error);
