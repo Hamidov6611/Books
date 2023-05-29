@@ -32,7 +32,7 @@ const Main = ({ modal, setModal, like, setLike, authMenu, setAuthMenu }) => {
     e.preventDefault();
     try {
       const { data } = await axios.get(
-        `http://80.85.139.42:1000/book/filter/?name_book=${bookName}`
+        `http://80.85.139.42:1000/book/filter/?name_book=${bookName.charAt(0).toUpperCase() + bookName.slice(1)}`
       );
       navigate(`/catalog/${bookName}`)
       Cookies.set("search", JSON.stringify({data, name:bookName}))

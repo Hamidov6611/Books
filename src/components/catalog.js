@@ -67,7 +67,7 @@ const Catalog = () => {
     try {
       if (bookTitle && !authorName) {
         const data1 = await axios.get(
-          `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle}
+          `http://80.85.139.42:1000/book/filter/?name_book=${bookTitle.charAt(0).toUpperCase() + bookTitle.slice(1)}
           `
         );
         console.log(data1.data);
@@ -118,7 +118,7 @@ const Catalog = () => {
   useEffect(() => {
     search()
   },[])
-  console.log(bookTitle.charAt(0).toUpperCase())
+  console.log(bookTitle.charAt(0).toUpperCase() + bookTitle.slice(1))
   return (
     <div className="flex flex-col relative">
       <Header />
